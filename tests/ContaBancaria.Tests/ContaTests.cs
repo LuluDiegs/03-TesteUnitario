@@ -138,4 +138,12 @@ public class ContaTests
         Assert.Equal(150m, conta.Saldo);
     }
 
+    [Fact]
+    public void Sacar_ValorValido_AtualizaSaldo()
+    {
+        var conta = new Conta("João", 200m);
+        conta.Sacar(50m);
+        Assert.Equal(150m, conta.Saldo);
+    }
+
 }
