@@ -156,4 +156,12 @@ public class ContaTests
         Assert.Equal(150m, destino.Saldo);
     }
 
+    [Fact]
+    public void Encerrar_SaldoZero_DeixaContaInativa()
+    {
+        var conta = new Conta("Lucas", 0m);
+        conta.Encerrar();
+        Assert.False(conta.Ativa);
+    }
+
 }
