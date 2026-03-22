@@ -146,4 +146,14 @@ public class ContaTests
         Assert.Equal(150m, conta.Saldo);
     }
 
+    [Fact]
+    public void Transferir_ValorValido_AtualizaSaldoDeAmbasContas()
+    {
+        var origem = new Conta("Maria", 200m);
+        var destino = new Conta("João", 100m);
+        origem.Transferir(destino, 50m);
+        Assert.Equal(150m, origem.Saldo);
+        Assert.Equal(150m, destino.Saldo);
+    }
+
 }
