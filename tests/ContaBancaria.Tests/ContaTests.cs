@@ -130,4 +130,12 @@ public class ContaTests
     //    - Conta encerrada tem Ativa == false
     // =======================================================
 
+    [Fact]
+    public void Depositar_ValorValido_AtualizaSaldo()
+    {
+        var conta = new Conta("Maria", 100m);
+        conta.Depositar(50m);
+        Assert.Equal(150m, conta.Saldo);
+    }
+
 }
