@@ -164,4 +164,86 @@ public class ContaTests
         Assert.False(conta.Ativa);
     }
 
+    [Fact]
+    public void Depositar_ValorZero_LancaArgumentException()
+    {
+        var conta = new Conta("Maria", 100m);
+        Assert.Throws<ArgumentException>(() => conta.Depositar(0m));
+    }
+
+    [Fact]
+    public void Depositar_ValorNegativo_LancaArgumentException()
+    {
+        var conta = new Conta("Maria", 100m);
+        Assert.Throws<ArgumentException>(() => conta.Depositar(-10m));
+    }
+
+    [Fact]
+    public void Depositar_ContaInativa_LancaInvalidOperationException()
+    {
+        var conta = new Conta("Ana", 0m);
+        conta.Encerrar();
+        Assert.Throws<InvalidOperationException>(() => conta.Depositar(10m));
+    }
+
+    [Fact]
+    public void Sacar_ValorZero_LancaArgumentException()
+    {
+        var conta = new Conta("João", 100m);
+        Assert.Throws<ArgumentException>(() => conta.Sacar(0m));
+    }
+
+    [Fact]
+    public void Sacar_ValorNegativo_LancaArgumentException()
+    {
+        var conta = new Conta("João", 100m);
+        Assert.Throws<ArgumentException>(() => conta.Sacar(-5m));
+    }
+
+    [Fact]
+    public void Sacar_SaldoInsuficiente_LancaInvalidOperationException()
+    {
+        var conta = new Conta("João", 30m);
+        Assert.Throws<InvalidOperationException>(() => conta.Sacar(50m));
+    }
+
+    [Fact]
+    public void Sacar_ContaInativa_LancaInvalidOperationException()
+    {
+        var conta = new Conta("Pedro", 0m);
+        conta.Encerrar();
+        Assert.Throws<InvalidOperationException>(() => conta.Sacar(10m));
+    }
+
+    [Fact]
+    public void Transferir_ValorZero_LancaArgumentException()
+    {
+        var origem = new Conta("Maria", 200m);
+        var destino = new Conta("João", 100m);
+        Assert.Throws<ArgumentException>(() => origem.Transferir(destino, 0m));
+    }
+
+    [Fact]
+    public void Transferir_SaldoInsuficiente_LancaInvalidOperationException()
+    {
+        var origem = new Conta("Maria", 20m);
+        var destino = new Conta("João", 100m);
+        Assert.Throws<InvalidOperationException>(() => origem.Transferir(destino, 50m));
+    }
+
+    [Fact]
+    public void Transferir_ContaDestinoInativa_LancaInvalidOperationException()
+    {
+        var origem = new Conta("Maria", 100m);
+        var destino = new Conta("João", 0m);
+        destino.Encerrar();
+        Assert.Throws<InvalidOperationException>(() => origem.Transferir(destino, 10m));
+    }
+
+    [Fact]
+    public void Encerrar_ComSaldo_LancaInvalidOperationException()
+    {
+        var conta = new Conta("Lucas", 10m);
+        Assert.Throws<InvalidOperationException>(() => conta.Encerrar());
+    }
 }
